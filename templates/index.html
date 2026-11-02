@@ -25,7 +25,22 @@
     </form>
     {% if url %}
       <div class="result">You entered: <b>{{ url }}</b></div>
+    {% endif %}    <h3 style="margin-top:32px;">Recent scans</h3>
+    {% if scans %}
+      <table style="width:100%; text-align:left; font-size:14px;">
+        <tr><th>Link</th><th>Verdict</th><th>Time</th></tr>
+        {% for s in scans %}
+          <tr>
+            <td style="word-break:break-all;">{{ s["url"] }}</td>
+            <td>{{ s["verdict"] }}</td>
+            <td>{{ s["created_at"] }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p style="color:#888;">No scans yet.</p>
     {% endif %}
+    
   </div>
 </body>
 </html>
