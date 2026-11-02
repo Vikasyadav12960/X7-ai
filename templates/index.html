@@ -5,14 +5,21 @@
   <title>X7 AI - Link Checker</title>
   <style>
     body { font-family: Arial, sans-serif; background: #0d0f1a; color: #e5e7eb;
-           display: flex; justify-content: center; padding-top: 80px; }
-    .box { width: 480px; text-align: center; }
+           display: flex; justify-content: center; padding: 60px 0; }
+    .box { width: 560px; text-align: center; }
     h1 { color: #8b5cf6; }
     input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333;
             background: #151826; color: white; box-sizing: border-box; }
     button { margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px;
              background: #8b5cf6; color: white; cursor: pointer; }
-    .result { margin-top: 24px; padding: 16px; background: #151826; border-radius: 8px; }
+    .result { margin-top: 24px; padding: 16px; background: #151826; border-radius: 8px;
+              text-align: left; border-left: 6px solid #888; }
+    .safe { border-color: #22c55e; }
+    .suspicious { border-color: #f59e0b; }
+    .dangerous { border-color: #ef4444; }
+    .badge-safe { color: #22c55e; } .badge-suspicious { color: #f59e0b; }
+    .badge-dangerous { color: #ef4444; }
+    table { width: 100%; text-align: left; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -23,24 +30,34 @@
       <input type="text" name="url" placeholder="https://example.com" required>
       <button type="submit">Check link</button>
     </form>
-    {% if url %}
-      <div class="result">You entered: <b>{{ url }}</b></div>
-    {% endif %}    <h3 style="margin-top:32px;">Recent scans</h3>
+
+    {% if result %}
+      <div class="result {{ result.verdict }}">
+        <h2 class="badge-{{ result.verdict }}">
+          {{ result.verdict|upper }} (risk score {{ result.score }}/100)
+        </h2>
+        <div style="word-break:break-all;">{{ result.url }}</div>
+        <ul>
+          {% for r in result.reasons %}<li>{{ r }}</li>{% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <h3 style="margin-top:32px;">Recent scans</h3>
     {% if scans %}
-      <table style="width:100%; text-align:left; font-size:14px;">
-        <tr><th>Link</th><th>Verdict</th><th>Time</th></tr>
+      <table>
+        <tr><th>Link</th><th>Verdict</th><th>Score</th></tr>
         {% for s in scans %}
           <tr>
             <td style="word-break:break-all;">{{ s["url"] }}</td>
-            <td>{{ s["verdict"] }}</td>
-            <td>{{ s["created_at"] }}</td>
+            <td class="badge-{{ s['verdict'] }}">{{ s["verdict"] }}</td>
+            <td>{{ s["score"] }}</td>
           </tr>
         {% endfor %}
       </table>
     {% else %}
       <p style="color:#888;">No scans yet.</p>
     {% endif %}
-    
   </div>
 </body>
 </html>
