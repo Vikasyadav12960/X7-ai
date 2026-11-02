@@ -18,6 +18,7 @@ def init_db():
             url TEXT NOT NULL,
             verdict TEXT NOT NULL,
             score INTEGER NOT NULL,
+            reasons TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
         """
@@ -26,11 +27,11 @@ def init_db():
     conn.close()
 
 
-def save_scan(url, verdict, score):
+def save_scan(url, verdict, score, reasons):
     conn = get_connection()
     conn.execute(
-        "INSERT INTO scans (url, verdict, score) VALUES (?, ?, ?)",
-        (url, verdict, score),
+        "INSERT INTO scans (url, verdict, score, reasons) VALUES (?, ?, ?, ?)",
+        (url, verdict, score, " | ".join(reasons)),
     )
     conn.commit()
     conn.close()
