@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>X7 AI - Link Checker</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0d0f1a; color: #e5e7eb;
+           display: flex; justify-content: center; padding-top: 80px; }
+    .box { width: 480px; text-align: center; }
+    h1 { color: #8b5cf6; }
+    input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333;
+            background: #151826; color: white; box-sizing: border-box; }
+    button { margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px;
+             background: #8b5cf6; color: white; cursor: pointer; }
+    .result { margin-top: 24px; padding: 16px; background: #151826; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>X7 AI</h1>
+    <p>Paste a link to check if it's safe.</p>
+    <form method="POST">
+      <input type="text" name="url" placeholder="https://example.com" required>
+      <button type="submit">Check link</button>
+    </form>
+    {% if url %}
+      <div class="result">You entered: <b>{{ url }}</b></div>
+    {% endif %}
+  </div>
+</body>
+</html>
