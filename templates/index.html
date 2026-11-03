@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,6 +19,15 @@
     .dangerous { border-color: #ef4444; }
     .badge-safe { color: #22c55e; } .badge-suspicious { color: #f59e0b; }
     .badge-dangerous { color: #ef4444; }
+    .ai-analysis {
+      margin-top: 20px;
+      padding: 16px;
+      background: #101827;
+      border: 1px solid #3730a3;
+      border-radius: 10px;
+      line-height: 1.7;
+    }
+    .ai-analysis h3 { color: #a78bfa; margin-top: 0; }
     table { width: 100%; text-align: left; font-size: 14px; }
   </style>
 </head>
@@ -40,6 +49,10 @@
         <ul>
           {% for r in result.reasons %}<li>{{ r }}</li>{% endfor %}
         </ul>
+        <div class="ai-analysis">
+          <h3>X7 AI Analysis</h3>
+          <div style="white-space: pre-wrap;">{{ result.ai_analysis }}</div>
+        </div>
       </div>
     {% endif %}
 
@@ -61,3 +74,4 @@
   </div>
 </body>
 </html>
+
